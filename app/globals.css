@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-gold-light: var(--color-gold-light);
+  --color-gold: var(--color-gold);
+  --color-gold-dark: var(--color-gold-dark);
+  
+  --color-bg-app: var(--background);
+  --color-surface-app: var(--surface);
+  --color-panel-app: var(--panel);
+  --color-border-app: var(--border-color);
+  
+  --color-text-main: var(--foreground);
+  --color-text-muted: var(--muted);
+}
+
+:root {
+  color-scheme: dark;
+  --font-inter: var(--font-inter), sans-serif;
+
+  --color-gold-light: #FDE68A;  
+  --color-gold: #EAB308;        
+  --color-gold-dark: #CA8A04;   
+
+  --headline-gradient-start: #FFFFFF;
+  --headline-gradient-mid: #E2E8F0;
+  --headline-gradient-end: #94A3B8;
+
+  --background: #09090B;
+  --surface: rgba(24, 24, 27, 0.6);
+  --panel: rgba(39, 39, 42, 0.4);
+  --foreground: #FAFAFA;
+  --muted: #A1A1AA;
+  --border-color: rgba(255, 255, 255, 0.08);
+  
+  --selection-bg: #EAB308;
+  --selection-fg: #000000;
+}
+
+html.light {
+  color-scheme: light;
+
+  --color-gold-light: #A16207;  
+  --color-gold: #854D0E;        
+  --color-gold-dark: #422006;   
+
+  --headline-gradient-start: #09090B;
+  --headline-gradient-mid: #1C1917;
+  --headline-gradient-end: #44403C;
+
+  --background: #FAF9F6; 
+  --surface: rgba(255, 255, 255, 0.85);
+  --panel: rgba(245, 245, 244, 0.7); 
+  --foreground: #1C1917;
+  --muted: #78716C;
+  --border-color: rgba(28, 25, 23, 0.08);
+  
+  --selection-bg: #854D0E;
+  --selection-fg: #FFFFFF;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(to right, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-headline-gradient {
+  background: linear-gradient(to bottom right, var(--headline-gradient-start), var(--headline-gradient-mid), var(--headline-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-panel {
+  background: var(--panel);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+
+.gold-glow {
+  box-shadow: 0 0 40px -10px rgba(234, 179, 8, 0.15);
+}
+.light .gold-glow {
+  box-shadow: 0 0 40px -10px rgba(133, 77, 14, 0.08);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
