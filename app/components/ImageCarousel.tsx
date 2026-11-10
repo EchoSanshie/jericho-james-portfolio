@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Autoplay } from 'swiper/modules';
+import { EffectCoverflow, Autoplay, A11y } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { motion } from 'framer-motion';
 
@@ -62,7 +62,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
   }, [selectedIndex, items]);
 
   if (!items || items.length === 0) {
-    return <div className="text-white text-center p-10">No projects to display.</div>;
+    return <div className="text-[var(--foreground)] text-center p-10">No projects to display.</div>;
   }
 
   const totalModalMedia = items.filter(item => !isUrlItem(item)).length;
@@ -76,7 +76,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
 
   return (
     <>
-      <div className="w-full glass-panel border border-white/10 rounded-2xl p-2 sm:p-3 shadow-[0_30px_60px_rgba(0,0,0,0.8)] font-sans relative overflow-hidden">
+      <div className="w-full glass-panel rounded-2xl p-2 sm:p-3 font-sans relative overflow-hidden">
         <Swiper
           onSwiper={setSwiperInstance}
           onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
@@ -96,8 +96,10 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
           autoplay={{
             delay: 2000,
             disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
-          modules={[EffectCoverflow, Autoplay]}
+          a11y={{ enabled: true }}
+          modules={[EffectCoverflow, Autoplay, A11y]}
           className="w-full pt-[30px] pb-[35px] md:pt-[40px] md:pb-[45px]"
         >
           {items.map((item, index) => (
@@ -114,32 +116,36 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
                   swiperInstance?.slideTo(index);
                 }
               }}
-              className="!w-[260px] !h-[320px] md:!w-[300px] md:!h-[400px] lg:!w-[320px] lg:!h-[420px] px-2 overflow-visible group/slide cursor-pointer"
+              className="!w-[min(68vw,240px)] aspect-[5/6] sm:!w-[280px] sm:!h-[336px] md:!w-[300px] md:!h-[360px] lg:!w-[320px] lg:!h-[384px] px-2 overflow-visible group/slide cursor-pointer"
             >
               <div className="relative w-full h-full rounded-xl overflow-hidden shadow-xl bg-[var(--glass-background)] border border-[var(--border-color)]">
                 <img 
                   src={formatSrc(item.image)} 
                   alt={item.name} 
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 block w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover/slide:scale-110 p-1 rounded-xl" 
                 />
                 
                 <div
+                  aria-hidden="true"
                   className="absolute inset-0 opacity-95 md:opacity-80 group-hover/slide:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ backgroundImage: 'linear-gradient(180deg, var(--carousel-overlay) 0%, var(--carousel-overlay-strong) 40%, transparent 100%)' }}
+                  style={{ backgroundImage: 'linear-gradient(180deg, transparent 0%, var(--carousel-overlay) 45%, var(--carousel-overlay-strong) 100%)' }}
                 />
                 <div
+                  aria-hidden="true"
                   className="absolute inset-0 transform translate-x-[-100%] group-hover/slide:translate-x-[100%] transition-transform duration-1000 ease-out pointer-events-none"
                   style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%)' }}
                 />
 
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 pb-10 md:pb-12 translate-y-2 md:translate-y-4 group-hover/slide:translate-y-0 transition-transform duration-500 ease-out pointer-events-none">
-                  <span className="text-[9px] md:text-[10px] font-mono tracking-widest text-[#D4AF37] uppercase bg-[#D4AF37]/10 px-2 py-0.5 rounded-full inline-block mb-1.5">
+                  <span className="text-[9px] md:text-[10px] font-mono tracking-widest text-[#F2D98B] uppercase bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full inline-block mb-1.5">
                     {item.exploreMedia?.type === "url" ? "Live Site" : "Project"}
                   </span>
-                  <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg leading-tight">
+                  <h3 className="text-lg md:text-xl font-bold text-white drop-shadow-lg leading-tight break-words">
                     {item.name}
                   </h3>
-                  <p className="text-[11px] md:text-xs text-[var(--muted)] mt-1.5 md:mt-2 opacity-100 md:opacity-0 group-hover/slide:opacity-100 transition-opacity duration-500 delay-75 line-clamp-3 md:line-clamp-4">
+                  <p className="text-[11px] md:text-xs text-white/80 mt-1.5 md:mt-2 opacity-100 md:opacity-0 group-hover/slide:opacity-100 transition-opacity duration-500 delay-75 line-clamp-3 md:line-clamp-4">
                     {item.description}
                   </p>
                 </div>
@@ -149,33 +155,28 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
         </Swiper>
 
         <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center w-full z-20 pointer-events-auto">
-          <div className="bg-[var(--panel)]/90 backdrop-blur-md px-3 py-2 rounded-full border border-[var(--border-color)] flex items-center shadow-lg shadow-[rgba(0,0,0,0.15)]">
-            <div className="relative flex items-center" style={{ gap: '8px' }}>
+          <div className="bg-[var(--glass)] backdrop-blur-md px-3 py-2 rounded-full border border-[var(--border-color)] flex items-center shadow-[var(--shadow-card)]">
+            <div className="relative flex items-center" style={{ gap: '4px' }}>
               
               {items.map((item, i) => (
                 <motion.button
                   key={item.id}
                   onClick={() => swiperInstance?.slideTo(i)}
-                  initial={false}
-                  animate={{ 
-                    width: i === activeIndex ? 24 : 8,
-                    backgroundColor: i === activeIndex ? 'var(--carousel-dot-active)' : 'var(--carousel-dot-inactive)'
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className="h-2 rounded-full cursor-pointer focus:outline-none"
+                  className="flex h-6 w-6 items-center justify-center cursor-pointer"
                   aria-label={`Go to slide ${i + 1}`}
-                />
+                  aria-current={i === activeIndex}
+                >
+                  <motion.span
+                    initial={false}
+                    animate={{ 
+                      width: i === activeIndex ? 24 : 8,
+                      backgroundColor: i === activeIndex ? 'var(--carousel-dot-active)' : 'var(--carousel-dot-inactive)'
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    className="block h-2 rounded-full"
+                  />
+                </motion.button>
               ))}
-
-              <motion.div
-                className="absolute top-0 left-0 h-2 rounded-full bg-gradient-to-r from-[#F3E5AB] to-[#D4AF37] pointer-events-none shadow-[0_0_12px_rgba(212,175,55,0.5)]"
-                initial={false}
-                animate={{ 
-                  x: activeIndex * 16,
-                  width: 24
-                }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
 
             </div>
           </div>
@@ -184,13 +185,16 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
 
       {selectedIndex !== null && modalItem && (
         <div 
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[rgba(15,23,42,0.95)] backdrop-blur-md p-4 md:p-10 cursor-zoom-out select-none"
+          role="dialog"
+          aria-modal="true"
+          aria-label={modalItem.name}
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[var(--background)]/95 backdrop-blur-md p-4 md:p-10 cursor-zoom-out select-none"
           onClick={() => setSelectedIndex(null)}
         >
           <div className="relative max-w-7xl w-full h-full flex items-center justify-center">
             
             <button 
-              className="absolute top-2 right-2 md:top-6 md:right-6 text-[var(--muted)] hover:text-[#D4AF37] text-5xl w-12 h-12 flex items-center justify-center z-[10000] transition-colors cursor-pointer"
+              className="absolute top-2 right-2 md:top-6 md:right-6 text-[var(--muted)] hover:text-[var(--accent-text)] text-5xl w-12 h-12 flex items-center justify-center z-[10000] transition-colors cursor-pointer"
               onClick={() => setSelectedIndex(null)}
             >
               &times;
@@ -198,7 +202,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
 
             {totalModalMedia > 1 && (
               <button
-                className="absolute left-0 md:left-4 text-[var(--foreground)]/70 hover:text-[#D4AF37] p-4 z-[10000] transition-colors cursor-pointer group"
+                className="absolute left-0 md:left-4 text-[var(--foreground)]/70 hover:text-[var(--accent-text)] p-4 z-[10000] transition-colors cursor-pointer group"
                 onClick={(e) => {
                   e.stopPropagation(); 
                   setSelectedIndex((prev) => getNextMediaIndex(prev!, -1));
@@ -216,14 +220,14 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
                   src={formatSrc(modalSrc)}
                   controls
                   autoPlay
-                  className="max-w-full max-h-[85vh] rounded-lg shadow-2xl cursor-default"
+                  className="max-w-full max-h-[72dvh] md:max-h-[82dvh] rounded-lg shadow-2xl cursor-default"
                   onClick={(e) => e.stopPropagation()} 
                 />
               ) : (
                 <img
                   src={formatSrc(modalSrc)}
                   alt={modalItem.name}
-                  className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl cursor-default"
+                  className="max-w-full max-h-[72dvh] md:max-h-[82dvh] object-contain rounded-lg shadow-2xl cursor-default"
                   onClick={(e) => e.stopPropagation()} 
                 />
               )}
@@ -237,7 +241,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ items }) => {
 
             {totalModalMedia > 1 && (
               <button
-                className="absolute right-0 md:right-4 text-[var(--foreground)]/70 hover:text-[#D4AF37] p-4 z-[10000] transition-colors cursor-pointer group"
+                className="absolute right-0 md:right-4 text-[var(--foreground)]/70 hover:text-[var(--accent-text)] p-4 z-[10000] transition-colors cursor-pointer group"
                 onClick={(e) => {
                   e.stopPropagation(); 
                   setSelectedIndex((prev) => getNextMediaIndex(prev!, 1));

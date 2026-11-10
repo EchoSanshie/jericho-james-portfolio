@@ -61,7 +61,7 @@ export const SkillCarousel: React.FC<SkillCarouselProps> = ({
   const sets = [0, 1, 2, 3];
 
   return (
-    <div className="relative flex w-full border-y border-[#D4AF37]/20 bg-[var(--panel)]/90 overflow-hidden py-3 md:py-4 cursor-grab active:cursor-grabbing group">
+    <div className="relative flex w-full border-y border-[var(--border-color)] bg-[var(--panel)] overflow-hidden py-3 md:py-4 cursor-grab active:cursor-grabbing group">
       <motion.div
         className="flex w-max"
         style={{ x: baseX }}
@@ -78,11 +78,14 @@ export const SkillCarousel: React.FC<SkillCarouselProps> = ({
             {skills.map((skill, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-2 md:space-x-3 rounded-lg border border-[var(--border-color)] bg-[var(--surface)] px-3 py-2 md:px-5 md:py-2.5 transition-colors hover:bg-[var(--panel)] hover:border-[#D4AF37]/40 min-w-max select-none"
+                className="flex items-center space-x-2 md:space-x-3 rounded-lg border border-[var(--border-color)] bg-[var(--surface)] px-3 py-2 md:px-5 md:py-2.5 transition-colors hover:bg-[var(--glass)] hover:border-[var(--accent)] min-w-max select-none"
               >
                 <img 
                   src={skill.image} 
-                  alt={skill.name} 
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
                   className="h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 object-contain pointer-events-none"
                 />
                 <span className="text-xs md:text-sm font-medium text-[var(--foreground)] font-mono tracking-wide pointer-events-none">
@@ -94,8 +97,8 @@ export const SkillCarousel: React.FC<SkillCarouselProps> = ({
         ))}
       </motion.div>
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 md:w-16 bg-gradient-to-r from-[var(--panel)] to-transparent z-10"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-[var(--panel)] to-transparent z-10"></div>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-8 md:w-16 bg-gradient-to-r from-[var(--panel)] to-transparent z-10"></div>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-[var(--panel)] to-transparent z-10"></div>
     </div>
   );
 };

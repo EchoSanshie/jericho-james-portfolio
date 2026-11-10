@@ -300,7 +300,7 @@ export default function Home() {
           result.message || "Something went wrong. Please try again later.",
         );
       }
-    } catch (error) {
+    } catch {
       setFormError("Network error. Please check your connection.");
     } finally {
       setIsSubmitting(false);
@@ -333,16 +333,16 @@ export default function Home() {
               Welcome to my Web Portfolio!
             </p>
             <div className="flex gap-3 md:gap-4 items-center mb-6 md:ml-[10%]">
-              <div className="w-8 md:w-20 h-[2px] bg-gradient-to-r from-amber-500 dark:from-[#D4AF37] to-transparent"></div>
-              <h2 className="text-lg md:text-2xl font-light text-[var(--muted)]">
-                I'm{" "}
+              <div className="w-8 md:w-20 h-[2px] bg-gradient-to-r from-[var(--accent)] to-transparent"></div>
+              <p className="text-lg md:text-2xl font-light text-[var(--muted)]">
+                I&apos;m{" "}
                 <span className="font-semibold text-gold-gradient">
                   Jericho
                 </span>
-              </h2>
+              </p>
             </div>
             <div className="md:ml-[10%]">
-              <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[var(--headline-gradient-start)] via-[var(--headline-gradient-mid)] to-[var(--headline-gradient-end)] leading-tight md:leading-none tracking-tight">
+              <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[var(--headline-gradient-start)] via-[var(--headline-gradient-mid)] to-[var(--headline-gradient-end)] leading-tight md:leading-none tracking-tight break-words">
                 Front-end Web & <br className="hidden sm:inline" />
                 <span className="text-gold-gradient">Mobile Developer</span>
               </h1>
@@ -358,7 +358,7 @@ export default function Home() {
                       new CustomEvent("nav-click", { detail: "projects" }),
                     )
                   }
-                  className="text-center text-sm md:text-base font-semibold text-black bg-gradient-to-r from-[#F3E5AB] to-[#D4AF37] px-8 py-3.5 md:py-4 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+                  className="btn-gold text-center w-full sm:w-auto text-sm md:text-base font-semibold px-8 py-3.5 md:py-4 rounded-full transition-all duration-300 hover:scale-105"
                 >
                   Explore My Work ➘
                 </a>
@@ -366,7 +366,7 @@ export default function Home() {
                 <a
                   href="/Resume/Jericho Panganiban CV.pdf"
                   download="Jericho Panganiban CV.pdf"
-                  className="text-center text-sm md:text-base font-medium text-[var(--foreground)] glass-panel px-8 py-3.5 md:py-4 rounded-full transition-all duration-300 hover:opacity-80 hover:border-zinc-500 hover:shadow-md hover:-translate-y-1"
+                  className="text-center w-full sm:w-auto text-sm md:text-base font-medium text-[var(--foreground)] glass-panel px-8 py-3.5 md:py-4 rounded-full transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-card)] hover:-translate-y-1"
                 >
                   Download CV
                 </a>
@@ -381,32 +381,32 @@ export default function Home() {
       {/* --- ABOUT SECTION --- */}
       <section
         id="about"
-        className="scroll-mt-32 w-full bg-[var(--surface)] py-16 md:py-28 border-y border-[var(--border-color)] flex flex-col items-center"
+        className="scroll-mt-32 w-full bg-[var(--band)] py-16 md:py-28 border-y border-[var(--border-color)] flex flex-col items-center"
       >
         <div className="min-h-screen w-full max-w-7xl px-4 sm:px-6 md:px-12 lg:px-24 flex flex-col items-center justify-center">
           <div className="w-full">
-            <h2 className="text-amber-600 dark:text-[#D4AF37] text-xs uppercase tracking-widest font-bold mb-6 md:mb-8 font-mono">
+            <h2 className="text-[var(--accent-text)] text-xs uppercase tracking-widest font-bold mb-6 md:mb-8 font-mono">
               01 | Background Check
             </h2>
 
-            <div className="relative w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] p-[2px] shadow-2xl shadow-slate-200/40 dark:shadow-black/50">
+            <div className="relative w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] p-[2px] shadow-[var(--shadow-card)]">
               <div
+                aria-hidden="true"
                 className="absolute top-1/2 left-1/2 h-[250%] w-[250%] -translate-x-1/2 -translate-y-1/2 animate-[spin_8s_linear_infinite] pointer-events-none"
                 style={{
                   backgroundImage:
-                    "conic-gradient(transparent 0deg 150deg, var(--color-gold) 180deg, transparent 180deg 330deg, var(--color-gold) 360deg)",
+                    "conic-gradient(transparent 0deg 150deg, var(--spinner-gold) 180deg, transparent 180deg 330deg, var(--spinner-gold) 360deg)",
                 }}
               />
 
               <div
-                className="relative z-10 flex flex-col lg:flex-row w-full h-full rounded-[calc(2rem-2px)] md:rounded-[calc(2.5rem-2px)] p-6 sm:p-8 md:p-12 lg:p-16 gap-10 lg:gap-12 transition-colors duration-300"
+                className="relative z-10 flex flex-col lg:flex-row w-full min-w-0 rounded-[calc(2rem-2px)] md:rounded-[calc(2.5rem-2px)] p-6 sm:p-8 md:p-12 lg:p-16 gap-10 lg:gap-12 transition-colors duration-300"
                 style={{
-                  background:
-                    "linear-gradient(var(--panel), var(--panel)), var(--background)",
+                  background: "var(--card-surface)",
                 }}
               >
-                <article className="flex-1 text-justify border-b lg:border-b-0 lg:border-r border-[var(--border-color)] pb-8 lg:pb-0 lg:pr-12 space-y-4 md:space-y-6">
-                  <h3 className="text-2xl md:text-4xl font-bold text-left text-[var(--foreground)] tracking-tight">
+                <article className="flex-1 min-w-0 text-justify border-b lg:border-b-0 lg:border-r border-[var(--border-color)] pb-8 lg:pb-0 lg:pr-12 space-y-4 md:space-y-6">
+                  <h3 className="text-2xl md:text-4xl font-bold text-left text-[var(--foreground)] tracking-tight break-words">
                     My Passion & Philosophy
                   </h3>
                   <p className="text-sm md:text-lg text-[var(--muted)] leading-relaxed font-light">
@@ -426,7 +426,7 @@ export default function Home() {
                   </p>
                 </article>
 
-                <aside className="flex-1 flex flex-col items-center justify-center space-y-8 md:space-y-10">
+                <aside className="flex-1 min-w-0 flex flex-col items-center justify-center space-y-8 md:space-y-10">
                   <ProfileCard />
 
                   <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:gap-x-12 sm:gap-y-8 w-full max-w-sm border-t border-[var(--border-color)] pt-8">
@@ -489,7 +489,7 @@ export default function Home() {
       >
         <div className="w-full max-w-7xl px-4 sm:px-6 md:px-12 lg:px-24">
           <div className="w-full text-left mb-10 md:mb-16">
-            <h2 className="text-amber-600 dark:text-[#D4AF37] text-xs uppercase tracking-widest font-bold mb-2 font-mono">
+            <h2 className="text-[var(--accent-text)] text-xs uppercase tracking-widest font-bold mb-2 font-mono">
               02 | Work Portfolio
             </h2>
             <h3 className="text-3xl md:text-5xl font-bold text-[var(--foreground)] tracking-tight">
@@ -503,9 +503,9 @@ export default function Home() {
 
           <div className="w-full space-y-12 md:space-y-16">
             {/* Web & Mobile Applications Container */}
-            <div className="bg-white dark:bg-transparent border border-gray-100/80 dark:border-transparent shadow-2xl shadow-slate-200/40 dark:shadow-none p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 md:space-y-6 transition-all duration-300">
+            <div className="content-card p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 md:space-y-6 transition-all duration-300">
               <h4 className="text-center text-[var(--muted)] font-mono tracking-widest text-xs md:text-sm uppercase">
-                // Web & Mobile Applications
+                {"// Web & Mobile Applications"}
               </h4>
               <div className="w-full max-w-5xl mx-auto">
                 <ImageCarousel items={myProjects} />
@@ -513,9 +513,9 @@ export default function Home() {
             </div>
 
             {/* Graphic Concepts & Prints Container */}
-            <div className="bg-white dark:bg-transparent border border-gray-100/80 dark:border-transparent shadow-2xl shadow-slate-200/40 dark:shadow-none p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 md:space-y-6 transition-all duration-300">
+            <div className="content-card p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 md:space-y-6 transition-all duration-300">
               <h4 className="text-center text-[var(--muted)] font-mono tracking-widest text-xs md:text-sm uppercase">
-                // Graphic Concepts & Prints
+                {"// Graphic Concepts & Prints"}
               </h4>
               <div className="w-full max-w-5xl mx-auto">
                 <ImageCarousel items={myDesigns} />
@@ -523,17 +523,17 @@ export default function Home() {
             </div>
 
             {/* UI/UX Concept Interfaces Container */}
-            <div className="bg-white dark:bg-transparent border border-gray-100/80 dark:border-transparent shadow-2xl shadow-slate-200/40 dark:shadow-none p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 transition-all duration-300">
+            <div className="content-card p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 transition-all duration-300">
               <h4 className="text-center text-[var(--muted)] font-mono tracking-widest text-xs md:text-sm uppercase">
-                // UI/UX Concept Interfaces
+                {"// UI/UX Concept Interfaces"}
               </h4>
               <ProjectGallery projects={myUIUX} />
             </div>
 
             {/* Videography & Cinematic Edits Container */}
-            <div className="bg-white dark:bg-transparent border border-gray-100/80 dark:border-transparent shadow-2xl shadow-slate-200/40 dark:shadow-none p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 transition-all duration-300">
+            <div className="content-card p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] space-y-4 transition-all duration-300">
               <h4 className="text-center text-[var(--muted)] font-mono tracking-widest text-xs md:text-sm uppercase">
-                // Videography & Cinematic Edits
+                {"// Videography & Cinematic Edits"}
               </h4>
               <ProjectGallery projects={myVideos} />
             </div>
@@ -544,17 +544,17 @@ export default function Home() {
       {/* --- SKILLS SECTION --- */}
       <section
         id="skills"
-        className="scroll-mt-32 w-full bg-[var(--surface)] py-16 md:py-28 border-y border-[var(--border-color)] flex flex-col items-center"
+        className="scroll-mt-32 w-full bg-[var(--band)] py-16 md:py-28 border-y border-[var(--border-color)] flex flex-col items-center"
       >
         <div className="w-full max-w-7xl px-4 sm:px-6 md:px-12 lg:px-24 flex flex-col items-center">
-          <h2 className="text-amber-600 dark:text-[#D4AF37] text-xs uppercase tracking-widest font-bold mb-10 md:mb-14 font-mono">
+          <h2 className="text-[var(--accent-text)] text-xs uppercase tracking-widest font-bold mb-10 md:mb-14 font-mono">
             03 | Development Toolkit
           </h2>
 
           <div className="w-full space-y-10 md:space-y-12 border-y border-[var(--border-color)] py-10 md:py-14 bg-[var(--panel)] rounded-[2rem] md:rounded-3xl px-2 sm:px-4 backdrop-blur-sm">
             <div className="flex flex-col items-center">
               <h3 className="text-[var(--muted)] font-mono text-[10px] md:text-[11px] mb-4 tracking-widest uppercase">
-                // Front-end Ecosystem
+                {"// Front-end Ecosystem"}
               </h3>
               <SkillCarousel
                 skills={frontendSkills}
@@ -565,7 +565,7 @@ export default function Home() {
 
             <div className="flex flex-col items-center">
               <h3 className="text-[var(--muted)] font-mono text-[10px] md:text-[11px] mb-4 tracking-widest uppercase">
-                // Native Mobile Engine
+                {"// Native Mobile Engine"}
               </h3>
               <SkillCarousel
                 skills={mobileSkills}
@@ -576,14 +576,14 @@ export default function Home() {
 
             <div className="flex flex-col items-center">
               <h3 className="text-[var(--muted)] font-mono text-[10px] md:text-[11px] mb-4 tracking-widest uppercase">
-                // Miscellaneous Languages
+                {"// Miscellaneous Languages"}
               </h3>
               <SkillCarousel skills={miscSkills} direction="left" speed={40} />
             </div>
 
             <div className="flex flex-col items-center">
               <h3 className="text-[var(--muted)] font-mono text-[10px] md:text-[11px] mb-4 tracking-widest uppercase">
-                // Production & Mockup Tools
+                {"// Production & Mockup Tools"}
               </h3>
               <SkillCarousel
                 skills={designSkills}
@@ -609,19 +609,29 @@ export default function Home() {
       >
         <div className="min-h-screen w-full max-w-7xl px-4 sm:px-6 md:px-12 flex flex-col items-center justify-center">
           <div className="max-w-3xl w-full">
-            <h2 className="text-amber-600 dark:text-[#D4AF37] text-xs uppercase tracking-widest font-bold mb-6 md:mb-8 text-center font-mono">
+            <h2 className="text-[var(--accent-text)] text-xs uppercase tracking-widest font-bold mb-6 md:mb-8 text-center font-mono">
               04 | Establish Connection
             </h2>
 
             <form
               onSubmit={handleContactSubmit}
-              className="relative w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] p-[2px] shadow-2xl dark:shadow-black/50"
+              className="relative w-full overflow-hidden rounded-[2rem] md:rounded-[2.5rem] p-[2px] shadow-[var(--shadow-card)]"
             >
-              {/* Spinning Border: Original gold gradient for light mode, var(--color-gold) for dark mode */}
-              <div className="absolute top-1/2 left-1/2 h-[200%] w-[200%] -translate-x-1/2 -translate-y-1/2 animate-[spin_6s_linear_infinite] bg-[conic-gradient(transparent_0_150deg,#D4AF37_180deg,transparent_180deg_330deg,#D4AF37_360deg)] dark:bg-[conic-gradient(transparent_0deg_150deg,var(--color-gold)_180deg,transparent_180deg_330deg,var(--color-gold)_360deg)] pointer-events-none"></div>
+              {/* Spinning border accent */}
+              <div
+                aria-hidden="true"
+                className="absolute top-1/2 left-1/2 h-[200%] w-[200%] -translate-x-1/2 -translate-y-1/2 animate-[spin_6s_linear_infinite] pointer-events-none"
+                style={{
+                  backgroundImage:
+                    "conic-gradient(transparent 0deg 150deg, var(--spinner-gold) 180deg, transparent 180deg 330deg, var(--spinner-gold) 360deg)",
+                }}
+              />
 
-              {/* Inner Container: Opaque white background for light mode, matches Philosophy panel in dark mode */}
-              <div className="relative z-10 w-full h-full rounded-[calc(2rem-2px)] md:rounded-[calc(2.5rem-2px)] bg-white dark:[background:linear-gradient(var(--panel),var(--panel)),var(--background)] p-6 sm:p-8 md:p-12 flex flex-col gap-5 md:gap-6 transition-colors duration-300">
+              {/* Inner container */}
+              <div
+                className="relative z-10 w-full min-w-0 rounded-[calc(2rem-2px)] md:rounded-[calc(2.5rem-2px)] p-6 sm:p-8 md:p-12 flex flex-col gap-5 md:gap-6 transition-colors duration-300"
+                style={{ background: "var(--card-surface)" }}
+              >
                 <div className="text-center mb-2">
                   <h3 className="text-2xl md:text-3xl font-bold text-[var(--foreground)] tracking-tight">
                     Get In Touch
@@ -648,7 +658,7 @@ export default function Home() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-green-700 dark:text-green-400 text-xs md:text-sm text-center bg-green-50 dark:bg-green-500/10 py-3 rounded-xl border border-green-200 dark:border-green-500/20 font-mono"
                   >
-                    Message dispatched successfully! I'll get back to you soon.
+                    Message dispatched successfully! I&apos;ll get back to you soon.
                   </motion.p>
                 )}
 
@@ -663,11 +673,14 @@ export default function Home() {
                     <input
                       id="fullName"
                       type="text"
+                      name="name"
+                      autoComplete="name"
+                      required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g., John Doe"
                       disabled={isSubmitting}
-                      className="w-full bg-[var(--panel)] border border-[var(--border-color)] rounded-xl px-4 py-3 md:py-3.5 text-sm md:text-base text-[var(--foreground)] outline-none focus:border-amber-500 dark:focus:border-[#D4AF37] focus:bg-[var(--surface)] transition-all font-light disabled:opacity-50"
+                      className="w-full bg-[var(--panel)] border border-[var(--input-border)] rounded-xl px-4 py-3 md:py-3.5 text-sm md:text-base text-[var(--foreground)] outline-none focus:border-[var(--accent)] focus:bg-[var(--surface)] transition-all font-light disabled:opacity-50"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -679,12 +692,15 @@ export default function Home() {
                     </label>
                     <input
                       id="emailAddr"
-                      type="type"
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g., mail@domain.com"
                       disabled={isSubmitting}
-                      className="w-full bg-[var(--panel)] border border-[var(--border-color)] rounded-xl px-4 py-3 md:py-3.5 text-sm md:text-base text-[var(--foreground)] outline-none focus:border-amber-500 dark:focus:border-[#D4AF37] focus:bg-[var(--surface)] transition-all font-light disabled:opacity-50"
+                      className="w-full bg-[var(--panel)] border border-[var(--input-border)] rounded-xl px-4 py-3 md:py-3.5 text-sm md:text-base text-[var(--foreground)] outline-none focus:border-[var(--accent)] focus:bg-[var(--surface)] transition-all font-light disabled:opacity-50"
                     />
                   </div>
                 </div>
@@ -698,31 +714,34 @@ export default function Home() {
                   </label>
                   <textarea
                     id="msgText"
+                    name="message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Describe your goals, requirements, timelines..."
                     rows={5}
+                    required
                     disabled={isSubmitting}
-                    className="w-full bg-[var(--panel)] border border-[var(--border-color)] rounded-xl px-4 py-3 md:py-3.5 text-sm md:text-base text-[var(--foreground)] outline-none focus:border-amber-500 dark:focus:border-[#D4AF37] focus:bg-[var(--surface)] transition-all font-light resize-none leading-relaxed disabled:opacity-50"
+                    className="w-full bg-[var(--panel)] border border-[var(--input-border)] rounded-xl px-4 py-3 md:py-3.5 text-sm md:text-base text-[var(--foreground)] outline-none focus:border-[var(--accent)] focus:bg-[var(--surface)] transition-all font-light resize-none leading-relaxed disabled:opacity-50"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-[#F3E5AB] to-[#D4AF37] text-black font-bold rounded-xl py-3.5 md:py-4 mt-2 transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] cursor-pointer tracking-wider uppercase text-xs md:text-sm disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="btn-gold w-full font-bold rounded-xl py-3.5 md:py-4 mt-2 transition-all duration-300 hover:scale-[1.01] cursor-pointer tracking-wider uppercase text-xs md:text-sm disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? "Transmitting..." : "Dispatch Message \u2192"}
                 </button>
 
                 <div className="w-full h-px bg-[var(--border-color)] my-2 md:my-4"></div>
 
-                <div className="flex flex-col sm:flex-row justify-between items-center w-full bg-[var(--panel)] border border-[var(--border-color)] rounded-xl py-3 px-4 md:px-5 gap-3 sm:gap-0 group hover:border-amber-500/30 dark:hover:border-[#D4AF37]/30 transition-colors duration-300">
-                  <div className="flex items-center gap-3 text-center sm:text-left">
+                <div className="flex flex-col sm:flex-row justify-between items-center w-full bg-[var(--panel)] border border-[var(--border-color)] rounded-xl py-3 px-4 md:px-5 gap-3 sm:gap-0 group hover:border-[var(--accent)] transition-colors duration-300">
+                  <div className="flex items-center gap-3 text-center sm:text-left min-w-0 w-full sm:w-auto">
                     <img
                       src="ic_Email.svg"
-                      alt="Email Icon"
-                      className="w-4 h-4 opacity-60 hidden sm:block"
+                      alt=""
+                      aria-hidden="true"
+                      className="icon-adaptive w-4 h-4 opacity-80 hidden sm:block"
                     />
                     <p className="text-[11px] md:text-sm text-[var(--muted)] font-mono tracking-tight break-all">
                       <span className="sm:hidden block text-[var(--muted)] font-semibold uppercase mb-0.5">
@@ -734,7 +753,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 text-xs text-amber-600 dark:text-[#D4AF37] hover:text-[var(--foreground)] transition-colors cursor-pointer font-mono px-3 py-1.5 rounded-md hover:bg-[var(--surface)] border border-amber-500/20 dark:border-[#D4AF37]/20 sm:border-none"
+                    className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 text-xs text-[var(--accent-text)] hover:text-[var(--foreground)] transition-colors cursor-pointer font-mono px-3 py-1.5 rounded-md hover:bg-[var(--glass)] border border-[var(--border-color)] sm:border-none"
                   >
                     {copied ? "[ Copied ]" : "Copy Email"}
                   </button>

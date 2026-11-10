@@ -129,7 +129,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
     <>
       <div className="w-full max-w-5xl mx-auto px-4 mt-6 md:mt-8 relative">
         <div 
-          className="relative min-h-[580px] sm:min-h-[620px] md:min-h-0 md:h-[450px] lg:h-[420px] w-full overflow-hidden rounded-2xl glass-panel p-2 md:p-3 border border-[var(--border-color)] shadow-[0_30px_60px_rgba(0,0,0,0.18)]"
+          className="relative w-full overflow-hidden rounded-2xl glass-panel p-2 md:p-3"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -141,27 +141,28 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
               initial="enter"
               animate="center"
               exit="exit"
-              className="w-full h-full flex flex-col md:flex-row p-4 sm:p-6 md:p-8 gap-6 md:gap-8 items-center justify-between"
+              className="w-full flex flex-col md:flex-row p-4 sm:p-6 md:p-8 gap-6 md:gap-8 items-center md:items-stretch"
             >
               <div 
-                className="w-full md:w-[45%] h-[220px] sm:h-[260px] md:h-full relative overflow-hidden rounded-xl bg-[var(--glass-background)] border border-[var(--border-color)] shadow-2xl shrink-0"
+                className="w-full md:w-[45%] shrink-0 flex items-center justify-center overflow-hidden rounded-xl bg-[var(--glass-background)] border border-[var(--border-color)] shadow-[var(--shadow-card)]"
               >
                 <motion.img
                   src={formatSrc(currentProject.image)}
                   alt={currentProject.name}
-                  className="w-full h-full object-cover transform p-1 rounded-xl"
-                  animate={{ scale: isHovered ? 1.05 : 1 }}
+                  loading="lazy"
+                  decoding="async"
+                  className="block w-full h-auto max-h-[300px] sm:max-h-[360px] md:max-h-[400px] object-contain p-1 rounded-xl"
+                  animate={{ scale: isHovered ? 1.04 : 1 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
               </div>
 
-              <div className="flex flex-col justify-between flex-grow h-full py-2 w-full">
-                <div>
+              <div className="flex flex-col flex-grow min-w-0 w-full py-2">
+                <div className="min-w-0">
                   <motion.span 
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-[10px] md:text-xs font-mono tracking-widest text-[#D4AF37] uppercase bg-[#D4AF37]/10 px-3 py-1 rounded-full inline-block"
+                    className="text-[10px] md:text-xs font-mono tracking-widest text-[var(--accent-text)] uppercase bg-[var(--accent-soft-bg)] px-3 py-1 rounded-full inline-block"
                   >
                     Project Showcase {index + 1}/{projects.length}
                   </motion.span>
@@ -169,7 +170,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--foreground)] mt-3 md:mt-4 tracking-tight drop-shadow-md"
+                    className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--foreground)] mt-3 md:mt-4 tracking-tight drop-shadow-md break-words text-balance"
                   >
                     {currentProject.name}
                   </motion.h3>
@@ -177,7 +178,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="text-[var(--muted)] text-sm md:text-base leading-relaxed mt-3 md:mt-4 text-justify"
+                    className="text-[var(--muted)] text-sm md:text-base leading-relaxed mt-3 md:mt-4 text-left break-words"
                   >
                     {currentProject.description}
                   </motion.p>
@@ -187,11 +188,11 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="pt-6 md:pt-8"
+                  className="mt-auto pt-6 md:pt-8"
                 >
                   <button
                     onClick={handleExploreClick}
-                    className="inline-flex items-center gap-2 md:gap-3 text-black font-semibold text-xs md:text-sm bg-gradient-to-r from-[#F3E5AB] to-[#D4AF37] px-6 py-2.5 md:px-8 md:py-3 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-300 hover:scale-[1.03] cursor-pointer"
+                    className="btn-gold inline-flex w-full sm:w-auto items-center justify-center gap-2 md:gap-3 font-semibold text-xs md:text-sm px-6 py-2.5 md:px-8 md:py-3 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer"
                   >
                     {buttonText} <span>&rarr;</span>
                   </button>
@@ -201,8 +202,8 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
           </AnimatePresence>
         </div>
 
-        <div className="flex justify-between items-center mt-5 md:mt-6 px-2 md:px-4">
-          <div className="flex gap-2 md:gap-2.5">
+        <div className="flex flex-wrap justify-between items-center gap-3 mt-5 md:mt-6 px-2 md:px-4">
+          <div className="flex flex-wrap gap-1 md:gap-1.5">
             {projects.map((_, i) => (
               <button
                 key={i}
@@ -210,31 +211,32 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
                   setDirection(i > index ? 1 : -1);
                   setIndex(i);
                 }}
-                className="relative h-2 rounded-full transition-all duration-500 bg-[var(--foreground)]/20"
-                style={{ width: i === index ? "24px" : "8px" }}
+                aria-label={`Go to project ${i + 1}`}
+                aria-current={i === index}
+                className="relative flex h-6 w-6 items-center justify-center cursor-pointer"
               >
-                {i === index && (
-                  <motion.div 
-                    layoutId="activeDot"
-                    className="absolute inset-0 bg-gradient-to-r from-[#F3E5AB] to-[#D4AF37] rounded-full"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
+                <span
+                  className="block h-2 rounded-full transition-all duration-500"
+                  style={{
+                    width: i === index ? "24px" : "8px",
+                    backgroundColor: i === index ? "var(--accent)" : "var(--carousel-dot-inactive)",
+                  }}
+                />
               </button>
             ))}
           </div>
 
-          <div className="flex gap-3 md:gap-4">
+          <div className="flex gap-3 md:gap-4 ml-auto">
             <button
               onClick={prevSlide}
-              className="p-2 md:p-3 rounded-full glass-panel text-[var(--foreground)] hover:text-[#D4AF37] border border-[var(--border-color)] hover:border-[#D4AF37]/30 transition-all cursor-pointer group shadow-lg bg-[var(--panel)]"
+              className="p-2 md:p-3 rounded-full glass-panel text-[var(--foreground)] hover:text-[var(--accent-text)] border border-[var(--border-color)] hover:border-[var(--accent)] transition-all cursor-pointer group shadow-[var(--shadow-card)] bg-[var(--panel)]"
               aria-label="Previous Project"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5 transform group-hover:-translate-x-0.5 transition-transform"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
             </button>
             <button
               onClick={nextSlide}
-              className="p-2 md:p-3 rounded-full glass-panel text-[var(--foreground)] hover:text-[#D4AF37] border border-[var(--border-color)] hover:border-[#D4AF37]/30 transition-all cursor-pointer group shadow-lg bg-[var(--panel)]"
+              className="p-2 md:p-3 rounded-full glass-panel text-[var(--foreground)] hover:text-[var(--accent-text)] border border-[var(--border-color)] hover:border-[var(--accent)] transition-all cursor-pointer group shadow-[var(--shadow-card)] bg-[var(--panel)]"
               aria-label="Next Project"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-0.5 transition-transform"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
@@ -286,7 +288,7 @@ export const ProjectGallery: React.FC<ProjectGalleryProps> = ({ projects }) => {
                       src={formatSrc(modalSrc)}
                       controls
                       autoPlay
-                      className="max-w-full max-h-[85vh] rounded-lg shadow-2xl cursor-default"
+                      className="max-w-full max-h-[72dvh] md:max-h-[82dvh] rounded-lg shadow-2xl cursor-default"
                     />
                   )}
 

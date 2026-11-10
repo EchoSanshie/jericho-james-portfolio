@@ -1,4 +1,5 @@
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import type { MouseEvent } from 'react';
 
 export default function ProfileCard() {
   const x = useMotionValue(0);
@@ -16,7 +17,7 @@ export default function ProfileCard() {
     ([cx, cy]) => `radial-gradient(350px circle at ${cx}px ${cy}px, rgba(255,215,0,0.15), transparent 80%)`
   );
 
-  const handleMouseMove = (e: any) => {
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     
     const width = rect.width;
@@ -50,28 +51,30 @@ export default function ProfileCard() {
           rotateY,
           transformStyle: 'preserve-3d',
         }}
-        className="group relative flex flex-col items-center m-auto w-60 h-85 bg-[var(--panel)] border border-[var(--color-gold)] rounded-2xl py-4 mb-4 shadow-xl overflow-hidden"
+        className="group relative flex flex-col items-center m-auto w-full max-w-[15rem] min-h-[21rem] bg-[var(--panel)] border border-[var(--color-gold)] rounded-2xl py-4 mb-4 shadow-[var(--shadow-card)] overflow-hidden"
       >
         <motion.div 
           className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           style={{ background: backgroundLight }}
         />
-        <p style={{ transform: 'translateZ(30px)' }} className="text-base text-gold font-bold z-20">
+        <p style={{ transform: 'translateZ(30px)' }} className="text-base text-gold font-bold z-20 text-center px-3 break-words">
           Jericho (Echo)
         </p>
         
         <img
           src="My Photo.svg"
-          alt="My Photo"
+          alt="Portrait of Jericho James Panganiban"
+          loading="lazy"
+          decoding="async"
           style={{ transform: 'translateZ(20px)' }}
-          className="w-full h-auto max-w-[180px] mt-2 z-20"
+          className="w-full h-auto max-w-[180px] mt-2 z-20 rounded-xl bg-[var(--glass-background)] border border-[var(--border-color)]"
         />
         
-        <p style={{ transform: 'translateZ(25px)' }} className="bg-[var(--color-gold)] py-1 px-2 rounded-xl text-xs text-[var(--foreground)] font-semibold mt-3 z-20">
+        <p style={{ transform: 'translateZ(25px)' }} className="bg-[var(--color-gold)] py-1 px-2 rounded-xl text-xs text-center text-[var(--gold-contrast)] font-semibold mt-3 z-20 break-words leading-snug">
           Front-end Web & Mobile Developer
         </p>
         
-        <p className="text-xs m-3 text-center text-[var(--muted)] z-20">
+        <p className="text-xs m-3 text-center text-[var(--muted)] z-20 break-words">
           Driven by passion, crafted; Building web and mobile experiences
           that turn ideas into reality
         </p>

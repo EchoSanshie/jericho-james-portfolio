@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
@@ -27,13 +27,50 @@ const themeScript = `
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const theme = storedTheme || (prefersDark ? 'dark' : 'light');
     document.documentElement.classList.add(theme);
+    document.documentElement.style.colorScheme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#09090B' : '#ECE7DD');
   } catch (error) {}
 })();
 `;
 
 export const metadata: Metadata = {
-  title: "Jericho James | Portfolio",
-  description: "Front-end Web & Mobile App Developer Portfolio",
+  title: "Jericho James | Front-end Web & Mobile Developer",
+  description:
+    "Portfolio of Jericho James Panganiban — front-end web and Android mobile developer crafting responsive interfaces, modern UI/UX layouts, and digital art.",
+  keywords: [
+    "Jericho James Panganiban",
+    "front-end developer",
+    "mobile developer",
+    "React",
+    "Next.js",
+    "Android",
+    "UI/UX",
+    "portfolio",
+  ],
+  authors: [{ name: "Jericho James Panganiban" }],
+  creator: "Jericho James Panganiban",
+  openGraph: {
+    type: "website",
+    title: "Jericho James | Front-end Web & Mobile Developer",
+    description:
+      "Portfolio of Jericho James Panganiban — front-end web and Android mobile developer crafting responsive interfaces, modern UI/UX layouts, and digital art.",
+    siteName: "Jericho James Portfolio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jericho James | Front-end Web & Mobile Developer",
+    description:
+      "Portfolio of Jericho James Panganiban — front-end web and Android mobile developer.",
+  },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ECE7DD" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090B" },
+  ],
 };
 
 export default function RootLayout({

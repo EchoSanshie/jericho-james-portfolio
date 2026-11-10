@@ -69,7 +69,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 md:mt-12 flex flex-col items-center">
         <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[auto] md:min-h-[400px]">
           
-          <div className="w-full md:col-span-6 lg:col-span-7 flex justify-center items-center perspective-[1000px] py-4 md:py-8">
+          <div className="w-full md:col-span-6 lg:col-span-7 flex justify-center items-center perspective-[1000px] py-4 md:py-8 min-w-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -85,7 +85,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
                   rotateX: rotateX,
                   rotateY: rotateY,
                 }}
-                className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-full aspect-[4/3] glass-panel rounded-2xl p-2 sm:p-3 border border-[var(--border-color)] shadow-[0_20px_40px_rgba(0,0,0,0.18)] lg:shadow-[0_30px_60px_rgba(0,0,0,0.22)] cursor-zoom-in group relative"
+                className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-full aspect-[4/3] glass-panel rounded-2xl p-2 sm:p-3 border border-[var(--border-color)] shadow-[var(--shadow-card)] cursor-zoom-in group relative"
               >
                 <div className="w-full h-full overflow-hidden rounded-xl relative bg-[var(--glass-background)] flex items-center justify-center">
                   <img
@@ -93,6 +93,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
                     alt={currentCert.title}
                     className="w-full h-full object-contain p-2"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out pointer-events-none" />
                 </div>
@@ -100,7 +101,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
             </AnimatePresence>
           </div>
 
-          <div className="w-full md:col-span-6 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left justify-center space-y-5 md:space-y-6">
+          <div className="w-full md:col-span-6 lg:col-span-5 flex flex-col items-center md:items-start text-center md:text-left justify-center space-y-5 md:space-y-6 min-w-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
@@ -110,14 +111,14 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
                 transition={{ duration: 0.3 }}
                 className="space-y-3 md:space-y-4 w-full flex flex-col items-center md:items-start"
               >
-                <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-[#F3E5AB] to-[#D4AF37]">
+                <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-gold-gradient">
                   Verified Certification
                 </span>
-                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[var(--foreground)] tracking-tight leading-snug">
+                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[var(--foreground)] tracking-tight leading-snug break-words">
                   {currentCert.title}
                 </h3>
                 
-                <div className="w-16 md:w-32 h-1 bg-gradient-to-r from-[#D4AF37] to-transparent my-4 rounded-full" />
+                <div className="w-16 md:w-32 h-1 bg-gradient-to-r from-[var(--accent)] to-transparent my-4 rounded-full" />
 
                 <div className="space-y-2 text-sm sm:text-base lg:text-lg">
                   <p className="text-[var(--muted)]">
@@ -133,7 +134,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
             <div className="flex items-center justify-center md:justify-start gap-4 pt-4 md:pt-6 w-full">
               <button
                 onClick={prevCert}
-                className="p-3 sm:p-4 rounded-full glass-panel text-[var(--foreground)] hover:text-[#D4AF37] border border-[var(--border-color)] hover:border-[#D4AF37]/30 transition-all cursor-pointer shadow-md bg-[var(--panel)] hover:bg-[rgba(255,255,255,0.12)]"
+                className="p-3 sm:p-4 rounded-full glass-panel text-[var(--foreground)] hover:text-[var(--accent-text)] border border-[var(--border-color)] hover:border-[var(--accent)] transition-all cursor-pointer shadow-[var(--shadow-card)] bg-[var(--panel)] hover:bg-[var(--hover)]"
                 aria-label="Previous Certificate"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
@@ -145,7 +146,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
 
               <button
                 onClick={nextCert}
-                className="p-3 sm:p-4 rounded-full glass-panel text-[var(--foreground)] hover:text-[#D4AF37] border border-[var(--border-color)] hover:border-[#D4AF37]/30 transition-all cursor-pointer shadow-md bg-[var(--panel)] hover:bg-[rgba(255,255,255,0.12)]"
+                className="p-3 sm:p-4 rounded-full glass-panel text-[var(--foreground)] hover:text-[var(--accent-text)] border border-[var(--border-color)] hover:border-[var(--accent)] transition-all cursor-pointer shadow-[var(--shadow-card)] bg-[var(--panel)] hover:bg-[var(--hover)]"
                 aria-label="Next Certificate"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
@@ -187,7 +188,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
                 </button>
               )}
 
-              <div className="relative w-full max-h-full flex flex-col items-center justify-center px-12 sm:px-16 md:px-24" onClick={(e) => e.stopPropagation()}>
+              <div className="relative w-full max-h-full flex flex-col items-center justify-center px-12 sm:px-16 md:px-24 min-w-0" onClick={(e) => e.stopPropagation()}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeIndex} 
@@ -200,7 +201,7 @@ export const CertificateGallery: React.FC<CertificateGalleryProps> = ({ certific
                     <img
                       src={currentCert.image}
                       alt={currentCert.title}
-                      className="max-w-full max-h-[75vh] md:max-h-[85vh] object-contain rounded-lg shadow-[0_0_30px_rgba(0,0,0,0.18)] md:shadow-[0_0_50px_rgba(0,0,0,0.22)] cursor-default bg-[var(--panel)]"
+                      className="max-w-full max-h-[70dvh] md:max-h-[80dvh] object-contain rounded-lg shadow-[0_0_30px_rgba(0,0,0,0.18)] md:shadow-[0_0_50px_rgba(0,0,0,0.22)] cursor-default bg-[var(--panel)]"
                     />
                   </motion.div>
                 </AnimatePresence>

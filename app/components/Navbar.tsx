@@ -7,7 +7,10 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    if (typeof document === "undefined") return "dark";
+    return document.documentElement.classList.contains("light") ? "light" : "dark";
+  });
   const isClickScrolling = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -94,25 +97,21 @@ export default function Navbar() {
 
   useEffect(() => {
     const root = document.documentElement;
-    const storedTheme = window.localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initialTheme = storedTheme === "light" || storedTheme === "dark"
-      ? storedTheme
-      : prefersDark
-      ? "dark"
-      : "light";
-
-    setTheme(initialTheme);
     root.classList.remove("light", "dark");
-    root.classList.add(initialTheme);
-  }, []);
+    root.classList.add(theme);
+    root.style.colorScheme = theme;
+  }, [theme]);
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(nextTheme);
+    const root = document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(nextTheme);
+    root.style.colorScheme = nextTheme;
     window.localStorage.setItem("theme", nextTheme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", nextTheme === "dark" ? "#09090B" : "#ECE7DD");
   };
 
   useEffect(() => {
@@ -141,12 +140,12 @@ export default function Navbar() {
           exit={{ y: -100, x: "-50%", opacity: 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="fixed top-5 left-1/2 w-[calc(100%-2rem)] max-w-3xl z-50 py-3 px-4 md:px-6 
-            bg-[var(--panel)] backdrop-blur-xl border border-[var(--border-color)] border-b-[rgba(212,175,55,0.18)]
-            shadow-[0_12px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.05)]"
+            bg-[var(--glass)] backdrop-blur-xl border border-[var(--border-color)] accent-hairline
+            shadow-[var(--shadow-float)]"
         >
           <nav className="flex justify-between items-center px-2">
             <a href="#home" onClick={(e) => handleNavLinkClick(e, "home")} aria-label="Home">
-              <img src="/Logo.svg" alt="Logo" className="w-8 md:w-10 h-auto cursor-pointer hover:opacity-80 transition-opacity" />
+              <img src="/Logo.svg" alt="Logo" className="icon-adaptive w-8 md:w-10 h-auto cursor-pointer hover:opacity-80 transition-opacity" />
             </a>
 
             <ul className="hidden md:flex gap-6 lg:gap-8 items-center text-sm md:text-base">
@@ -156,7 +155,7 @@ export default function Navbar() {
                     href={`#${link}`}
                     onClick={(e) => handleNavLinkClick(e, link)}
                     className={`capitalize transition-colors duration-300 font-medium tracking-wide ${
-                      activeSection === link ? "text-[#D4AF37]" : "text-[var(--muted)] hover:text-[var(--foreground)]"
+                      activeSection === link ? "text-[var(--accent-text)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"
                     }`}
                   >
                     {link}
@@ -165,7 +164,7 @@ export default function Navbar() {
                   {activeSection === link && (
                     <motion.span 
                       layoutId="activeIndicator"
-                      className="absolute -bottom-2 left-0 w-full h-[2px] bg-[#D4AF37] shadow-[0_0_10px_#D4AF37] rounded-full"
+                      className="absolute -bottom-2 left-0 w-full h-[2px] bg-[var(--accent)] rounded-full"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -178,7 +177,7 @@ export default function Navbar() {
                 type="button"
                 onClick={toggleTheme}
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--glass-background)] text-[var(--foreground)] transition-colors hover:bg-[rgba(255,255,255,0.12)] focus:outline-none focus:ring-2 focus:ring-[rgba(212,175,55,0.3)]"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-color)] bg-[var(--glass-background)] text-[var(--foreground)] transition-colors hover:bg-[var(--hover)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
               >
                 {theme === "dark" ? (
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -194,8 +193,10 @@ export default function Navbar() {
 
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex md:hidden p-2 text-gray-400 hover:text-gray-200 transition-colors focus:outline-none"
+                className="flex md:hidden p-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors focus:outline-none"
                 aria-label="Toggle Navigation Menu"
+                aria-expanded={isOpen}
+                aria-controls="mobile-navigation"
               >
                 {isOpen ? (
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -213,6 +214,7 @@ export default function Navbar() {
           <AnimatePresence>
             {isOpen && (
               <motion.ul
+                id="mobile-navigation"
                 initial={{ opacity: 0, height: 0, marginTop: 0 }}
                 animate={{ opacity: 1, height: "auto", marginTop: 16 }}
                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
@@ -225,7 +227,7 @@ export default function Navbar() {
                       href={`#${link}`}
                       onClick={(e) => handleNavLinkClick(e, link)}
                       className={`block w-full capitalize transition-colors duration-300 py-1 ${
-                        activeSection === link ? "text-[#D4AF37]" : "text-[var(--muted)] hover:text-[var(--foreground)]"
+                        activeSection === link ? "text-[var(--accent-text)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"
                       }`}
                     >
                       {link}

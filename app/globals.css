@@ -1,99 +1,323 @@
 @import "tailwindcss";
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-gold-light: var(--color-gold-light);
-  --color-gold: var(--color-gold);
-  --color-gold-dark: var(--color-gold-dark);
-  
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-gold-light: var(--brand-gold-light);
+  --color-gold: var(--brand-gold);
+  --color-gold-dark: var(--brand-gold-dark);
+
   --color-bg-app: var(--background);
   --color-surface-app: var(--surface);
   --color-panel-app: var(--panel);
   --color-border-app: var(--border-color);
-  
+
   --color-text-main: var(--foreground);
   --color-text-muted: var(--muted);
 }
 
+/* ------------------------------------------------------------------ */
+/*  Theme tokens                                                       */
+/*  Dark = original palette. Light = "Warm Editorial".                 */
+/*  Every text/background pair below meets WCAG AA (4.5:1).            */
+/* ------------------------------------------------------------------ */
+
 :root {
   color-scheme: dark;
-  --font-inter: var(--font-inter), sans-serif;
 
-  --color-gold-light: #FDE68A;  
-  --color-gold: #EAB308;        
-  --color-gold-dark: #CA8A04;   
+  /* Brand gold ramp */
+  --brand-gold-light: #fde68a;
+  --brand-gold: #eab308;
+  --brand-gold-dark: #ca8a04;
 
-  --headline-gradient-start: #FFFFFF;
-  --headline-gradient-mid: #E2E8F0;
-  --headline-gradient-end: #94A3B8;
+  /* Headline gradient */
+  --headline-gradient-start: #ffffff;
+  --headline-gradient-mid: #e2e8f0;
+  --headline-gradient-end: #94a3b8;
 
-  --background: #09090B;
-  --surface: rgba(24, 24, 27, 0.6);
-  --panel: rgba(39, 39, 42, 0.4);
-  --foreground: #FAFAFA;
-  --muted: #A1A1AA;
-  --border-color: rgba(255, 255, 255, 0.08);
-  
-  --selection-bg: #EAB308;
+  /* Surfaces */
+  --background: #09090b;
+  --band: rgba(24, 24, 27, 0.62);
+  --surface: rgba(24, 24, 27, 0.62);
+  --panel: rgba(39, 39, 42, 0.42);
+  --glass: rgba(39, 39, 42, 0.42);
+  --card: transparent;
+  --card-border: transparent;
+  --card-surface: linear-gradient(var(--panel), var(--panel)), var(--background);
+  --glass-background: rgba(255, 255, 255, 0.04);
+
+  /* Type */
+  --foreground: #fafafa;
+  --muted: #a1a1aa;
+
+  /* Lines */
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  --input-border: rgba(255, 255, 255, 0.12);
+
+  /* Accent */
+  --accent: #d4af37;
+  --accent-text: #e8c766;
+  --accent-soft-bg: rgba(212, 175, 55, 0.12);
+  --accent-contrast: #0b0b0d;
+  --gold-contrast: #0b0b0d;
+  --hover: rgba(255, 255, 255, 0.08);
+  --ring: #e8c766;
+  --placeholder: #8b8b94;
+  --spinner-gold: #eab308;
+
+  /* Media overlays + carousel controls */
+  --carousel-overlay: rgba(9, 9, 11, 0.55);
+  --carousel-overlay-strong: rgba(9, 9, 11, 0.94);
+  --carousel-dot-active: #e8c766;
+  --carousel-dot-inactive: rgba(255, 255, 255, 0.5);
+
+  /* Elevation */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-float: 0 12px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+
+  /* Adaptive monochrome icons (light-gold artwork) */
+  --icon-filter: none;
+
+  --selection-bg: #eab308;
   --selection-fg: #000000;
 }
 
+/*
+ *  Light = "Soft Paper".
+ *  No pure white anywhere. A warm greige page carries cream cards and
+ *  muted bronze accents, which drops the luminance peak that causes
+ *  glare while keeping every text pair at WCAG AA or better.
+ */
 html.light {
   color-scheme: light;
 
-  --color-gold-light: #A16207;  
-  --color-gold: #854D0E;        
-  --color-gold-dark: #422006;   
+  --brand-gold-light: #7e5f16;
+  --brand-gold: #69500f;
+  --brand-gold-dark: #3f3007;
 
-  --headline-gradient-start: #09090B;
-  --headline-gradient-mid: #1C1917;
-  --headline-gradient-end: #44403C;
+  --headline-gradient-start: #211d17;
+  --headline-gradient-mid: #3a342c;
+  --headline-gradient-end: #514b43;
 
-  --background: #FAF9F6; 
-  --surface: rgba(255, 255, 255, 0.85);
-  --panel: rgba(245, 245, 244, 0.7); 
-  --foreground: #1C1917;
-  --muted: #78716C;
-  --border-color: rgba(28, 25, 23, 0.08);
-  
-  --selection-bg: #854D0E;
-  --selection-fg: #FFFFFF;
+  --background: #ece7dd;   /* warm greige page */
+  --band: #f2ede4;         /* raised section bands */
+  --surface: #f8f4ec;      /* cream cards, chips, footer text areas */
+  --panel: #ede7dd;        /* recessed fields and inner panels */
+  --glass: rgba(248, 244, 236, 0.82);
+  --card: #f8f4ec;
+  --card-border: #ded7c9;
+  --card-surface: #f8f4ec;
+  --glass-background: #f6f2e9;
+
+  --foreground: #211d17;
+  --muted: #56504a;
+
+  --border-color: #ded7c9;
+  --border-strong: #c6bdab;
+  --input-border: #d6cdbd;
+
+  --accent: #7e5f16;
+  --accent-text: #69500f;
+  --accent-soft-bg: rgba(105, 80, 15, 0.08);
+  --accent-contrast: #f7f3ea;
+  --gold-contrast: #f7f3ea;
+  --hover: rgba(33, 29, 23, 0.06);
+  --ring: #69500f;
+  --placeholder: #6a645b;
+  --spinner-gold: #b08a22;
+
+  --carousel-overlay: rgba(26, 21, 14, 0.55);
+  --carousel-overlay-strong: rgba(26, 21, 14, 0.94);
+  --carousel-dot-active: #7e5f16;
+  --carousel-dot-inactive: #8c8375;
+
+  --shadow-card: 0 1px 2px rgba(60, 48, 28, 0.05), 0 18px 42px -30px rgba(60, 48, 28, 0.26);
+  --shadow-float: 0 12px 34px -18px rgba(60, 48, 28, 0.24), inset 0 1px 0 rgba(255, 251, 242, 0.6);
+  --glass-shadow: 0 1px 2px rgba(60, 48, 28, 0.05), 0 24px 48px -36px rgba(60, 48, 28, 0.34);
+
+  --icon-filter: brightness(0.44) saturate(1.15) sepia(0.16);
+
+  --selection-bg: #69500f;
+  --selection-fg: #f7f3ea;
 }
 
-.text-gold-gradient {
-  background: linear-gradient(to right, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text;
-  color: transparent;
-}
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
 
-.text-headline-gradient {
-  background: linear-gradient(to bottom right, var(--headline-gradient-start), var(--headline-gradient-mid), var(--headline-gradient-end));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text;
-  color: transparent;
-}
-
-.glass-panel {
-  background: var(--panel);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-}
-
-.gold-glow {
-  box-shadow: 0 0 40px -10px rgba(234, 179, 8, 0.15);
-}
-.light .gold-glow {
-  box-shadow: 0 0 40px -10px rgba(133, 77, 14, 0.08);
+html {
+  scroll-padding-top: 7rem;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-wrap: break-word;
+}
+
+/* Media never exceeds its container and keeps its natural ratio unless a
+   component explicitly pins its size with a utility class. */
+img,
+video,
+canvas {
+  max-width: 100%;
+}
+
+img:not([class*="h-"]) {
+  height: auto;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+:where(input, textarea, select):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent);
+}
+
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 9999px;
+    border: 3px solid var(--background);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Components                                                         */
+/* ------------------------------------------------------------------ */
+
+.text-gold-gradient {
+  background-image: linear-gradient(
+    to right,
+    var(--brand-gold-light),
+    var(--brand-gold),
+    var(--brand-gold-dark)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-headline-gradient {
+  background-image: linear-gradient(
+    to bottom right,
+    var(--headline-gradient-start),
+    var(--headline-gradient-mid),
+    var(--headline-gradient-end)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.glass-panel {
+  background: var(--glass);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: var(--glass-shadow);
+}
+
+.content-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-card);
+}
+
+.accent-hairline {
+  border-bottom-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.feature-panel:hover {
+  box-shadow:
+    0 20px 44px -22px rgba(0, 0, 0, 0.7),
+    0 0 34px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+html.light .feature-panel:hover {
+  box-shadow:
+    0 20px 44px -28px rgba(41, 33, 18, 0.28),
+    0 0 34px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.icon-adaptive {
+  filter: var(--icon-filter);
+  transition: filter 0.3s ease;
+}
+
+.font-inter {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.btn-gold {
+  background-image: linear-gradient(100deg, #f3e5ab 0%, #d4af37 55%, #c9a227 100%);
+  color: #14100a;
+  box-shadow: 0 10px 28px -14px rgba(212, 175, 55, 0.55);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 14px 34px -12px rgba(212, 175, 55, 0.65);
+}
+
+html.light .btn-gold {
+  background-image: linear-gradient(100deg, #8a6a1a 0%, #705510 58%, #56410b 100%);
+  color: #fbf8f1;
+  box-shadow: 0 10px 24px -16px rgba(105, 80, 15, 0.5);
+}
+
+html.light .btn-gold:hover {
+  box-shadow: 0 14px 30px -14px rgba(105, 80, 15, 0.6);
+}
+
+.gold-glow {
+  box-shadow: 0 0 40px -10px rgba(234, 179, 8, 0.15);
+}
+html.light .gold-glow {
+  box-shadow: 0 0 40px -10px rgba(107, 82, 16, 0.12);
+}
+
+/* Keep the entrance/parallax motion pleasant, but never harmful. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
