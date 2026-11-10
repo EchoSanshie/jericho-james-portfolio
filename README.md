@@ -4,4 +4,4 @@ This portfolio serves as a showcase of my technical skills, featured development
 
 To view the live, deployed version of this portfolio, please visit the link below:
 
-https://jericho-james-portfolio.vercel.app/
+https://jericho-p.vercel.app/
