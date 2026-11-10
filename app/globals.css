@@ -19,12 +19,6 @@
   --color-text-muted: var(--muted);
 }
 
-/* ------------------------------------------------------------------ */
-/*  Theme tokens                                                       */
-/*  Dark = original palette. Light = "Warm Editorial".                 */
-/*  Every text/background pair below meets WCAG AA (4.5:1).            */
-/* ------------------------------------------------------------------ */
-
 :root {
   color-scheme: dark;
 
@@ -87,12 +81,6 @@
   --selection-fg: #000000;
 }
 
-/*
- *  Light = "Soft Paper".
- *  No pure white anywhere. A warm greige page carries cream cards and
- *  muted bronze accents, which drops the luminance peak that causes
- *  glare while keeping every text pair at WCAG AA or better.
- */
 html.light {
   color-scheme: light;
 
@@ -104,10 +92,10 @@ html.light {
   --headline-gradient-mid: #3a342c;
   --headline-gradient-end: #514b43;
 
-  --background: #ece7dd;   /* warm greige page */
-  --band: #f2ede4;         /* raised section bands */
-  --surface: #f8f4ec;      /* cream cards, chips, footer text areas */
-  --panel: #ede7dd;        /* recessed fields and inner panels */
+  --background: #ece7dd;
+  --band: #f2ede4;
+  --surface: #f8f4ec;
+  --panel: #ede7dd;
   --glass: rgba(248, 244, 236, 0.82);
   --card: #f8f4ec;
   --card-border: #ded7c9;
@@ -146,10 +134,6 @@ html.light {
   --selection-fg: #f7f3ea;
 }
 
-/* ------------------------------------------------------------------ */
-/*  Base                                                               */
-/* ------------------------------------------------------------------ */
-
 html {
   scroll-padding-top: 7rem;
 }
@@ -161,8 +145,6 @@ body {
   overflow-wrap: break-word;
 }
 
-/* Media never exceeds its container and keeps its natural ratio unless a
-   component explicitly pins its size with a utility class. */
 img,
 video,
 canvas {
@@ -210,10 +192,6 @@ img:not([class*="h-"]) {
     background: var(--muted);
   }
 }
-
-/* ------------------------------------------------------------------ */
-/*  Components                                                         */
-/* ------------------------------------------------------------------ */
 
 .text-gold-gradient {
   background-image: linear-gradient(
@@ -307,7 +285,6 @@ html.light .gold-glow {
   box-shadow: 0 0 40px -10px rgba(107, 82, 16, 0.12);
 }
 
-/* Keep the entrance/parallax motion pleasant, but never harmful. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
